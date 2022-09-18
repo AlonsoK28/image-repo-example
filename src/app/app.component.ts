@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryItem, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryConfig, GalleryItem, ImageItem } from 'ng-gallery';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,30 @@ export class AppComponent implements OnInit{
   items: GalleryItem[] = [];
   imageData = data;
 
+  constructor( private galleryRef: Gallery ){
+
+  }
+
   ngOnInit(): void {
-    // Creat gallery items
     this.items = this.imageData.map(item => new ImageItem({ src: item.srcUrl, thumb: item.previewUrl }));
+  }
+
+  addThumbs(){
+    const config: GalleryConfig = {
+      thumb: true
+    };
+
+    const ref = this.galleryRef.ref('my-app-gallery');
+    ref.setConfig(config);
+  }
+
+  removeThumbs(){
+    const config: GalleryConfig = {
+      thumb: false
+    };
+
+    const ref = this.galleryRef.ref('my-app-gallery');
+    ref.setConfig(config);
   }
 }
 
